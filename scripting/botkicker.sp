@@ -19,5 +19,5 @@ public void OnPluginStart()
 public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
 	ServerCommand("bot_kick");
-	PrintToChatAll("%s New round has begun, no bots allowed!");
+	PrintToChatAll("%s New round has begun, no bots allowed!", TAG_MESSAGE);
 }
