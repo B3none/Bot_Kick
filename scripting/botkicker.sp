@@ -1,5 +1,4 @@
 #include <sourcemod>
-#include <colors>
 #pragma newdecls required
 
 #define TAG_MESSAGE "[\x0CB3none_BotKick\x01]"
