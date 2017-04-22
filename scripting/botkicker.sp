@@ -1,7 +1,7 @@
 #include <sourcemod>
 #pragma newdecls required
 
-#define TAG_MESSAGE "[\x0CB3none_BotKick\x01]"
+#define TAG_MESSAGE "[\x0CB3none_BotRemoval\x01]"
 
 public Plugin myinfo =
 {
@@ -11,51 +11,13 @@ public Plugin myinfo =
     version = "0.0.2"
 }
 
-Handle g_Cvar_bot_quota = INVALID_HANDLE;
-int g_bot_quota
-int g_max_players
-
-public void OnConfigsExecuted()
+public void OnPluginStart()
 {
-    g_Cvar_bot_quota = FindConVar("bot_quota");
-    g_bot_quota = GetConVarInt(g_Cvar_bot_quota);
-    g_max_players = GetMaxClients();
+	HookEvent("round_start", OnRoundStart);
 }
 
-public void OnClientPutInServer(int client)
+public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-    if(!IsFakeClient(client))
-    {
-        return;
-    }
-    
-    if(g_bot_quota < GetConVarInt(g_Cvar_bot_quota))
-    {
-        SetConVarInt(g_Cvar_bot_quota, g_bot_quota);
-    }
-    
-    int i;
-    int count;
-    
-    for(i = 1; i<=g_max_players; i++)
-    {
-        if(IsClientInGame(i) && GetClientTeam(i)>1)
-        {
-            count++;
-        }
-    }
-    
-    if(count<=g_bot_quota)
-    {
-        return;
-    }
-    
-    char name[32];
-    if(!GetClientName(client, name, sizeof(name)))
-    {
-        return;
-    }
-    
-    ServerCommand("bot_kick %s", name);
-    PrintToChatAll("%s Bot %s has been kicked.", TAG_MESSAGE, name);
-} 
+	ServerCommand("bot_kick");
+	PrintToChatAll("%s New round has begun, no bots allowed!");
+}
