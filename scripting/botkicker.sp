@@ -9,7 +9,7 @@ public Plugin myinfo =
     author = "B3none",
     description = "Ensures that there are 0 bots in the server.",
     version = "0.0.3"
-    "url" = "https://github.com/b3none"
+    url = "https://github.com/b3none"
 }
 
 public void OnPluginStart()
